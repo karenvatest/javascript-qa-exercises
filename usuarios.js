@@ -69,32 +69,57 @@ function validateUser(user){
               
 }
 
-// Probando las funciones, con varios escenarios
-// Positivos y negativos
+function getActiveUsersByRole(users, role){
+   
+    const usersRol = users.filter(usuario => usuario.rol === role && usuario.active === true);
+    return usersRol;
+}
+
+
+
+// Probando las funciones de crear y validar usuario, con varios escenarios
+// Escenarios: Positivos y negativos
+
+// Caso positivo: Datos correctos
 const user1 = createUser(8, "Karen", "karen@gmail.com", 19, "QA", true);
 console.log(user1);
 console.log(validateUser(user1));
 
+// Caso negativo: Nombre vacio
 const user2 = createUser(1,"", "karen@gmail.com", 18, "QA", true);
 console.log(user2);
 console.log(validateUser(user2));
 
+// Caso negativo: Correo vacio
 const user3 = createUser(2,"Ana", "", 28, "Developer", true);
 console.log(user3);
 console.log(validateUser(user3));
 
+// Caso negativo: Edad < 18
 const user4 = createUser(3,"Luis", "Luis@gmail.com", 0, "Manager", false);
 console.log(user4);
 console.log(validateUser(user4));
 
+// Caso positivo: Validacion de Correo 
 const user5 = createUser(5,"Alma", "karen.com", 32, "QA", true);
 console.log(user5);
 console.log(validateUser(user5));
 
+// Caso negativo: Rol no listado
 const user6 = createUser(6,"Alma", "alma_01@gmail.com", 32, "P", "");
 console.log(user6);
 console.log(validateUser(user6));
 
+// Caso negativo: Activo diferente de true y false
 const user7 = createUser(7,"", "", 12, "Admi", "yes");
 console.log(user7);
 console.log(validateUser(user7));
+
+// Crear colección de usuarios
+const users = [user1, user2, user3, user4, user5, user6, user7];
+
+// Probamos funcion de Filtrar por rol, con los usuarios creados
+const activeQAUsers = getActiveUsersByRole(users, "QA");
+console.log("Usuarios filtrados por rol QA y activos:");
+console.log(activeQAUsers);
+
