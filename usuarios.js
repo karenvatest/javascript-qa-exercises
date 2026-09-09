@@ -1,3 +1,4 @@
+// Funcion para crear usuarios
 function createUser(id,nombre, email, edad, rol, active){
     const user = {
         id,
@@ -10,6 +11,7 @@ function createUser(id,nombre, email, edad, rol, active){
     return user;   
 }
 
+// Funcion para validar los datos de los usuarios
 function validateUser(user){
     const roles = ["QA", "Developer", "Manager", "PO"];
     let nombreValido;
@@ -69,12 +71,23 @@ function validateUser(user){
               
 }
 
+// Funcion para filtrar los usuarios por rol
 function getActiveUsersByRole(users, role){
    
-    const usersRol = users.filter(usuario => usuario.rol === role && usuario.active === true);
-    return usersRol;
+    const rolUsers = users.filter(user => user.rol === role && user.active === true);
+    return rolUsers;
 }
 
+
+// Funcion para buscar usuarios por correo electronico
+function findUserByEmail(users, email){
+    const emailUsers = users.find(user => user.email === email);
+    if(emailUsers !== undefined){
+        return emailUsers;
+    }else{
+        return null;
+    }
+}
 
 
 // Probando las funciones de crear y validar usuario, con varios escenarios
@@ -123,3 +136,6 @@ const activeQAUsers = getActiveUsersByRole(users, "QA");
 console.log("Usuarios filtrados por rol QA y activos:");
 console.log(activeQAUsers);
 
+// Probamos funcion de buscar por correo
+const usersByEmail = findUserByEmail(users, "Luis@gmail.com");
+console.log(usersByEmail);
