@@ -88,13 +88,23 @@ function findUserByEmail(users, email){
         return null;
     }
 }
-
+// Funciones para comparar el valor esperrado vs el actual
+function validateUserData(user, expectedRole, expectedActive){
+    return user.rol === expectedRole && user.active === expectedActive;
+}
+function assertUserRole(user, expectedRole){
+    if(user.rol === expectedRole){
+        return "PASS";
+    }else{
+        return "FAIL";
+    }
+}
 
 // Probando las funciones de crear y validar usuario, con varios escenarios
 // Escenarios: Positivos y negativos
 
 // Caso positivo: Datos correctos
-const user1 = createUser(8, "Karen", "karen@gmail.com", 19, "QA", true);
+const user1 = createUser(8, "Karen", "karen@gmail.com", 19, "QA", false);
 console.log(user1);
 console.log(validateUser(user1));
 
@@ -139,3 +149,10 @@ console.log(activeQAUsers);
 // Probamos funcion de buscar por correo
 const usersByEmail = findUserByEmail(users, "Luis@gmail.com");
 console.log(usersByEmail);
+
+// Probamos function de comparar valores esperados vs actual
+const expectedDataUser = validateUserData(user2, "Developer", true);
+console.log(expectedDataUser);
+
+const expectedRoleUser = assertUserRole(user1, "Developer");
+console.log(expectedRoleUser);
