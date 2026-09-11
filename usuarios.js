@@ -100,6 +100,55 @@ function assertUserRole(user, expectedRole){
     }
 }
 
+// Funcion para crear un usuario
+function generateTestUser(id){
+
+    const user = {};
+    user.id = id;
+    user.nombre = `user${id}`;
+    user.email = `user${id}@test.com`;
+    user.edad = 25;
+    user.rol = "QA";
+    user.active = true;
+
+    return user;
+}
+
+// Funcion para crear muchos usuarios
+function generateUsers(quantity){
+
+    const users = [];
+    for(let i = 1; i <= quantity; i++){
+        let userGenerated = generateTestUser(i);
+        users.push(userGenerated);
+    }
+
+    return users;
+}
+
+// Funcion para validar todos lo usuario y determinar si cada uno es válido
+function validateGeneratedUsers(users){
+
+    let passed = 0;
+    let failed = 0;
+    
+    for(let i = 0; i < users.length; i++){
+        const user = users[i];
+        const resultado = validateUser(user);
+        let validResultado = "";
+        if( resultado === true){
+             validResultado = "PASS";
+             passed++;
+        }else{
+             validResultado = "FAIL";
+             failed++;
+        }
+        console.log(`User ${user.id}: ${validResultado}`);
+    }
+    return users;
+}
+
+// --------------------------------------------------------------------------- //
 // Probando las funciones de crear y validar usuario, con varios escenarios
 // Escenarios: Positivos y negativos
 
@@ -156,3 +205,15 @@ console.log(expectedDataUser);
 
 const expectedRoleUser = assertUserRole(user1, "Developer");
 console.log(expectedRoleUser);
+
+// Probamos function que crea un usuario
+const newUser = generateTestUser(12);
+console.log(newUser);
+
+// Probamos function que crea muchos usuario
+const usersGenerated = generateUsers(5);
+console.log(usersGenerated);
+
+// Probamos function que valida a los usuarios
+const validUsers = validateGeneratedUsers(usersGenerated);
+console.log(validUsers);
