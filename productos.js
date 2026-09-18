@@ -41,6 +41,41 @@ function validateProductSearch(actualProducts, expectedQuantity){
     return "FAIL";
 }
 
+// Funcion para validar el carrito
+// A: Empezando por el total de la cantidad de los productos
+function calculateCartTotal(cart){
+
+    return cart.reduce((total, product) => {
+        
+        total += product.price * product.quantity;
+        return total;
+        
+    }, 0);
+
+}
+
+// B: Validar la cantidad del total en el carrito vs el valor esperado
+function validateCartTotal(actualTotal, expectedTotal){
+    if(actualTotal === expectedTotal){
+        return "PASS"
+    }
+    return "FAIL";
+}
+
+// C: Validar los productos que estan en el carrito, que tanto la cantidad como el precio son mayor que 0
+function validateCartItems(cart){
+
+    const validItems = cart.every(product => {
+        return product.price > 0 && product.quantity > 0;
+    });
+
+    if (validItems) {
+        return "PASS";
+    }
+    return "FAIL";
+    
+}
+
 
 // Creamos un array que contendra nuestros productos
 const products = [
@@ -51,6 +86,11 @@ const products = [
     { id: 5, name: "Headphones", price: 1800, available: true }
 ];
 
+const cart = [
+    { id: 1, name: "Mouse", price: 500, quantity: 2 },
+    { id: 2, name: "Monitor", price: 4500, quantity: 1 },
+    { id: 3, name: "Headphones", price: 1800, quantity: 3 }
+];
 
 // --------------------------------------------------------------------------- //
 // Probando las funciones:
@@ -71,7 +111,7 @@ const expectedProducts = [
 // 2. Para validar los productos despues del filtro, segun los productos actuales vs los esperados
 console.log(validateProductFilter(actualProducts, expectedProducts));
 
-// Para filtrar por nombre o letra que contenga el producto
+// 3. Para filtrar por nombre o letra que contenga el producto
 // y validar el producto segun la busqueda contra el listado de productos
 const result1 = findProductByName(products, "mouse");
 console.log("Test 1 - Buscar Mouse:", validateProductSearch(result1, 1));
@@ -81,3 +121,9 @@ console.log('Test 2 - Buscar "o":', validateProductSearch(result2, 5));
 
 const result3 = findProductByName(products, "tablet");
 console.log("Test 3 - Buscar Tablet:", validateProductSearch(result3, 0));
+
+// 4. Para validar los productos en el carrito
+const actualTotal = calculateCartTotal(cart);
+console.log(validateCartTotal(actualTotal, 10900));
+console.log(validateCartItems(cart));
+
