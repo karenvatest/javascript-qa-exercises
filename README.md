@@ -122,13 +122,13 @@ Durante los ejercicios se practican conceptos como:
 
 Aplicar estos fundamentos en escenarios de automatización más cercanos a proyectos reales:
 
-🌐 Automatización Web
-🔌 API Testing
-🧪 Cypress
-🎭 Playwright
-📱 Appium
-🔄 Git & GitHub
-⚙️ CI/CD
+- 🌐 Automatización Web
+- 🔌 API Testing
+- 🧪 Cypress
+- 🎭 Playwright
+- 📱 Appium
+- 🔄 Git & GitHub
+- ⚙️ CI/CD
 🐳 Docker
 
 ---
