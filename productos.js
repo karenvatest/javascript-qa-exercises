@@ -76,6 +76,34 @@ function validateCartItems(cart){
     
 }
 
+// Funcion para validar un runner que pueda ejecutar un test
+function runTest(testName, testFunction){
+    const result = testFunction();
+    console.log(`${testName}: ${result}`);
+    return result;
+}
+
+// Funcion para validar un runner que pueda ejecutar varios tests automaticamente
+function runTests(tests){
+
+    let passed = 0;
+    let failed = 0;
+
+    tests.forEach(test =>{
+        const result = runTest(test.name, test.test);
+
+        if (result === "PASS") {
+            passed += 1;
+        } else {
+            failed += 1;
+        }
+    });
+
+    console.log(`Total ${tests.length}`);
+    console.log(`PASS: ${passed}`);
+    console.log(`FAIL: ${failed}`);
+
+}
 
 // Creamos un array que contendra nuestros productos
 const products = [
@@ -86,10 +114,30 @@ const products = [
     { id: 5, name: "Headphones", price: 1800, available: true }
 ];
 
+// Creamos un array que contenga los productos en el carrito
 const cart = [
     { id: 1, name: "Mouse", price: 500, quantity: 2 },
     { id: 2, name: "Monitor", price: 4500, quantity: 1 },
     { id: 3, name: "Headphones", price: 1800, quantity: 3 }
+];
+
+// Creamos un array que tenga los tests a ejecutar
+const tests = [
+    {
+        name: "Validar total correcto",
+        test: () => validateCartTotal(actualTotal, 10900)
+    },
+    {
+        name: "Validar total incorrecto",
+        test: () => validateCartTotal(actualTotal, 10000)
+    },
+    {
+        name: "Validar productos del carrito",
+        test: () => validateCartItems(cart)
+    }, {
+        name: "Validar cantidad de productos",
+        test: () => validateCartItems(cart)
+    }
 ];
 
 // --------------------------------------------------------------------------- //
@@ -126,4 +174,13 @@ console.log("Test 3 - Buscar Tablet:", validateProductSearch(result3, 0));
 const actualTotal = calculateCartTotal(cart);
 console.log(validateCartTotal(actualTotal, 10900));
 console.log(validateCartItems(cart));
+
+// Para validar solo un test
+/*runTest("Validar total del carrito", () => {
+    return validateCartTotal(actualTotal, 10900);
+});*/
+
+// 5. Para validar varios tests
+const testsResult = runTests(tests);
+console.log(testsResult);
 
